@@ -5,7 +5,7 @@ Simple Middleman App structure for an instant ready full features work environem
 ## Features
 - Rack-enabled webserver ready
 - Site Data Config
-- HAML based template & layout
+- [HAML](http://haml.info/) based template & layout
 - Localization
 - [Livereload](http://livereload.com/) with the [middleman-livereload](https://github.com/middleman/middleman-livereload) gem
 - Basic & Custom Reset Stylesheets
