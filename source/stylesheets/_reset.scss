@@ -1,0 +1,28 @@
+//
+// SASS/Compass Reset
+// @author  Jean-Philippe Sirois <http://jpsirois.com>
+//
+
+* { @include box-sizing(border-box); }
+article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary { display: block; }
+time { display: inline; }
+html { font-size: 62.5%; position: relative; }
+html, body { height: 100%; }
+body { margin: 0; }
+ul, ol, dl { margin: 0; }
+nav ul, ol.breadbrumbs { list-style:none; margin: 0; padding: 0; }
+.clearfix:after { content: ""; display: block; clear: both; } .clearfix { zoom: 1; }
+a *, button * { cursor: pointer; }
+a img { border:0; }
+p { margin: 0 0 1em; }
+hr { display: none; }
+small { font-size: 90%; }
+del { text-decoration: line-through; }
+sup, sub { height: 0; line-height: 1; vertical-align: baseline; _vertical-align: bottom; position: relative; font-size: 75%; } sup { bottom: 1ex; } sub { top: .5ex; }
+span.amp { font-family: Baskerville, "Goudy Old Style", "Palatino", "Book Antiqua", serif; font-weight: normal; font-style: italic; font-size: 1.2em; line-height: 0.8; }
+abbr[title], dfn[title] { border-bottom:1px dotted #000; cursor:help; }
+button, input[type=submit], input[type=button], * html input { width: auto; overflow: visible; }
+button, input[type=submit], input[type=button] { cursor: pointer; }
+button::-moz-focus-inner { border: 0; padding: 1px; }
+input { margin: 0 }
+input:-webkit-autofill, input:focus:-webkit-autofill { -webkit-box-shadow: 0 0 0 1000px $inputBgColor inset; }

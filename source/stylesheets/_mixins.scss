@@ -1,0 +1,145 @@
+//
+// SASS/Compass Mixins Helpers
+// @author  Jean-Philippe Sirois <http://jpsirois.com>
+//
+
+// FontFace easier maintainability {{{
+// Example: @include fontFace("museosans/", "MuseoSans", "museosans", normal italic, 500, 700, 300)
+@mixin fontFace($fontFilePath, $fontFamilyName, $fontFilePrefixName, $fontStyles, $fontWeightNormal, $fontWeightBold: nil, $fontWeightLight: nil) {
+
+  @each $fontStyle in $fontStyles {
+
+    $suffix: if($fontStyle == 'italic', '_italic', '');
+
+    @include font-face($fontFamilyName, font-files($fontFilePath + $fontFilePrefixName + "_" + $fontWeightNormal + $suffix + ".woff", $fontFilePath + $fontFilePrefixName + "_" + $fontWeightNormal + $suffix + ".ttf"), $fontFilePath + $fontFilePrefixName + '_' + $fontWeightNormal + $suffix + '.eot', normal, $fontStyle);
+
+    @if $fontWeightBold != nil {
+      @include font-face($fontFamilyName, font-files($fontFilePath + $fontFilePrefixName + "_" + $fontWeightBold + $suffix + ".woff", $fontFilePath + $fontFilePrefixName + "_" + $fontWeightBold + $suffix + ".ttf"), $fontFilePath + $fontFilePrefixName + '_' + $fontWeightBold + $suffix + '.eot', bold, $fontStyle);
+    }
+
+    @if $fontWeightLight != nil {
+      @include font-face($fontFamilyName, font-files($fontFilePath + $fontFilePrefixName + "_" + $fontWeightLight + $suffix + ".woff", $fontFilePath + $fontFilePrefixName + "_" + $fontWeightLight $suffix + + ".ttf"), $fontFilePath + $fontFilePrefixName + '_' + $fontWeightLight + $suffix + '.eot', light, $fontStyle);
+    }
+
+  }
+}
+// }}}
+
+// All Link Pseudos States {{{
+@mixin all-link-pseudos($col) {
+  &:visisted { color: darken($col, 5%); }
+  &:hover    { color: darken($col, 10%); }
+  &:active   { color: darken($col, 15%); }
+}
+//}}}
+
+// Media Query {{{
+// Source: http://alwaystwisted.com/post.php?s=2013-04-01-my-media-query-mixin
+@mixin mq($point, $IE9: false, $query1: min, $query2: width) {
+  @if $IE9 == true{
+    .lt-ie9 & {
+      @content;
+    }
+    @media screen and (#{$query1}-#{$query2}: $point / $doc-font-size +em) {
+      @content;
+    }
+  }
+
+  @else {
+    @media screen and (#{$query1}-#{$query2}: $point / $doc-font-size +em) {
+      @content;
+    }
+  }
+}
+//}}}
+
+// Add image with Retina Support {{{
+@mixin at2x($image_name, $w: auto, $h: auto, $extention: '.png') {
+  background-image: image_url($image_name + $extention);
+  $x2img : $image_name + '@2x' + $extention;
+
+  @media all and (-webkit-min-device-pixel-ratio : 1.5) {
+    background-image: image_url($x2img);
+    background-size: $w $h;
+  }
+}
+// }}}
+
+// Normal and retina sprite maps {{{
+// Source: https://gist.github.com/3036217
+
+// Exemple of use
+// $sprites: sprite-map("sprites/*.png");
+// $sprites-retina: sprite-map("sprites-retina/*.png");
+// @include sprite-bg("sprites");
+
+@mixin sprite-bg($name) {
+  background-image: sprite-url($sprites);
+  background-position: sprite-position($sprites, $name);
+  background-repeat: no-repeat;
+  display: block;
+  height: image-height(sprite-file($sprites, $name));
+  width: image-width(sprite-file($sprites, $name));
+
+  @media (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3/2), (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5), (min-resolution: 1.5dppx) {
+    background-image: sprite-url($sprites-retina);
+    @include background-size(ceil(image-width(sprite-path($sprites-retina)) / 2) auto);
+
+    @if (sprite-position($sprites, $name) != sprite-position($sprites-retina, $name)) {
+      $ypos: round(nth(sprite-position($sprites-retina, $name), 2) / 2);
+      background-position: 0 $ypos;
+    }
+  }
+}
+
+// }}}
+
+// Return `width` and `height` of a given size {{{
+// Converted to SASS inspired by: https://github.com/heliom/stylus-utils/blob/master/mixins.styl
+@mixin size($w, $h: nil) {
+  @if $h != nil {
+    width: $w; height: $h;
+  }
+  @else {
+    width: $w; height: $w;
+  }
+}
+// }}}
+
+// Return given `font-size` in `px` and `rem` if no unit is specified {{{
+// Converted to SASS inspired by: https://github.com/heliom/stylus-utils/blob/master/mixins.styl
+@mixin font-size($fs) {
+  @if unitless($fs) and $fs != 0 {
+    $fsrem: $fs / 10;
+    font-size: #{$fs}px;
+    font-size: #{$fsrem}rem;
+  }
+  @else {
+    font-size: $fs;
+  }
+}
+// }}}
+
+// Override `display` for adding `inline-block` IE hack {{{
+// Converted to SASS inspired by: https://github.com/heliom/stylus-utils/blob/master/mixins.styl
+@mixin display($value) {
+  @if $value == 'inline-block' {
+    display: inline-block; *display: inline; *zoom: 1;
+  }
+  @else {
+    display: $value;
+  }
+}
+// }}}
+
+// Override `overflow` for adding `scroll` iOS support {{{
+// Converted to SASS inspired by: https://github.com/heliom/stylus-utils/blob/master/mixins.styl
+@mixin overflow($value) {
+  @if $value == 'scroll' {
+    overflow: scroll; -webkit-overflow-scrolling: touch;
+  }
+  @else {
+    overflow: $value;
+  }
+}
+//}}}

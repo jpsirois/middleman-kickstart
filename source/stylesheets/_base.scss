@@ -1,0 +1,43 @@
+// Base styles
+html, body {
+  position: relative;
+  margin: 0 auto;
+  min-width: $bodyWidth;
+}
+
+body {
+  background: $bgBodyColor;
+  font-family: $sansserif;
+  font-weight: $normal;
+  @include font-size($bodyFontSize);
+  color: $textBodyColor;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,h2,h3 {
+  margin: 0 0 1em;
+  text-rendering: optimizeLegibility;
+  line-height: 1.1;
+}
+
+a {
+  color: $textEmphasisColor;
+  @include all-link-pseudos($textEmphasisColor);
+  text-decoration: none;
+}
+
+a,
+a img,
+a span,
+a:after,
+a:before,
+a h1,
+button,
+span.label {
+  @include transition(all .1s ease-out);
+  @include transition-property('opacity, color, background-position, background-color, border-color');
+}
+
+strong {
+  font-weight: $bold;
+}
